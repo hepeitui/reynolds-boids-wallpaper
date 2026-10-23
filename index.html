@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#080a0b" />
+    <meta name="description" content="离线运行的 WebGL2 Reynolds 鸟群壁纸。" />
+    <title>群飞 · 实时鸟群壁纸</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <script src="host.js"></script>
+    <script defer src="settings.js"></script>
+    <script defer src="neighbors.js"></script>
+    <script defer src="simulation.js"></script>
+    <script defer src="history.js"></script>
+    <script defer src="renderer.js"></script>
+    <script defer src="ui.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <main id="wallpaper" aria-label="实时鸟群壁纸">
+      <canvas id="scene" aria-label="正在飞行的鸟群"></canvas>
+    </main>
+    <aside id="controls" aria-label="鸟群壁纸开发设置"></aside>
+  </body>
+</html>
