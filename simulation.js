@@ -113,14 +113,7 @@
       return this.seed / 4294967296;
     }
     configure(settings) {
-      const old = this.settings;
       this.settings = settings;
-      if (
-        old.k !== settings.k ||
-        old.mode !== settings.mode ||
-        old.graphHz !== settings.graphHz
-      )
-        this.neighbors.invalidate();
       this.updateBounds();
     }
     updateBounds() {
@@ -338,44 +331,19 @@
             sx = 0,
             sy = 0;
           let n;
-          if (s.mode === "radius") {
-            const sums = this.neighbors.aggregateRadius(
-              this,
-              i,
-              this._unitX,
-              this._unitY,
-            );
-            n = sums[0];
-            cx = sums[1];
-            cy = sums[2];
-            ax = sums[3];
-            ay = sums[4];
-            sx = sums[5];
-            sy = sums[6];
-          } else {
-            n = this.neighbors.query(this, i);
-            for (let q = 0; q < n; q++) {
-              const j = this.neighbors.result[q];
-              cx += this.x[j] - x;
-              cy += this.y[j] - y;
-              ax += this._unitX[j];
-              ay += this._unitY[j];
-            }
-            if (s.separation > 0) {
-              const sn = this.neighbors.querySeparation(this, i);
-              for (let q = 0; q < sn; q++) {
-                const j = this.neighbors.result[q],
-                  dx = this.x[j] - x,
-                  dy = this.y[j] - y,
-                  d = this.neighbors.dist[q];
-                if (d > 1e-4) {
-                  const f = (1 - d / 15) / d;
-                  sx -= dx * f;
-                  sy -= dy * f;
-                }
-              }
-            }
-          }
+          const sums = this.neighbors.aggregateRadius(
+            this,
+            i,
+            this._unitX,
+            this._unitY,
+          );
+          n = sums[0];
+          cx = sums[1];
+          cy = sums[2];
+          ax = sums[3];
+          ay = sums[4];
+          sx = sums[5];
+          sy = sums[6];
           if (n) {
             fx += (s.cohesion * cx) / n / 58 + s.alignment * (ax / n - ux);
             fy += (s.cohesion * cy) / n / 58 + s.alignment * (ay / n - uy);

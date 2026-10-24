@@ -13,6 +13,8 @@
     lastUI = 0,
     submitted = 0,
     droppedTime = 0,
+    simulationSteps = 0,
+    catchUpSteps = 0,
     previousSubmit = 0,
     uiWindowStart = 0,
     uiFrames = 0;
@@ -156,7 +158,6 @@
           frameTimeMs: actualGap,
           renderMs: submitMs,
           hostFps,
-          mode: settings.mode,
         });
         lastUI = now;
         uiWindowStart = submitEnd;
@@ -169,11 +170,13 @@
     while (drawDue && accumulator >= 1 / 60 && steps < 4) {
       const begin = performance.now();
       sim.step(1 / 60);
+      simulationSteps++;
       history.record(sim);
       pendingCpu += performance.now() - begin;
       accumulator -= 1 / 60;
       steps++;
     }
+    catchUpSteps += Math.max(0, steps - 1);
     if (drawDue && accumulator >= 1 / 60) {
       droppedTime += accumulator;
       accumulator = 0;
@@ -200,7 +203,6 @@
         fps: 0,
         activeCount: 0,
         hostFps,
-        mode: settings.mode,
       });
     }
   }
@@ -271,6 +273,10 @@
       alive: sim.count,
       submitted,
       droppedSimulationSeconds: droppedTime,
+      simulationSteps,
+      catchUpSteps,
+      stepAccounting:
+        "Cumulative since page startup and not reset by reset(); simulationSteps counts sim.step calls and catchUpSteps sums max(0, steps per RAF frame - 1).",
       viewport: {
         width: innerWidth,
         height: innerHeight,

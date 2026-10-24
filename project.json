@@ -1,314 +1,246 @@
 {
-	"contentrating" : "Everyone",
-	"description" : "雷格雷诺兹鸟群实验模型",
-	"file" : "index.html",
-	"general" : 
-	{
-		"properties" : 
-		{
-			"alignment" : 
-			{
-				"fraction" : true,
-				"index" : 5,
-				"max" : 4,
-				"min" : 0,
-				"order" : 105,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "对齐权重",
-				"type" : "slider",
-				"value" : 1
-			},
-			"avoidTaskbar" : 
-			{
-				"index" : 20,
-				"order" : 120,
-				"text" : "避开任务栏",
-				"type" : "bool",
-				"value" : true
-			},
-			"brightness" : 
-			{
-				"fraction" : true,
-				"index" : 11,
-				"max" : 2,
-				"min" : 0.1,
-				"order" : 111,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "亮度",
-				"type" : "slider",
-				"value" : 1.15
-			},
-			"cohesion" : 
-			{
-				"fraction" : true,
-				"index" : 6,
-				"max" : 4,
-				"min" : 0,
-				"order" : 106,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "聚合权重",
-				"type" : "slider",
-				"value" : 0.65
-			},
-			"color" : 
-			{
-				"index" : 10,
-				"order" : 110,
-				"text" : "鸟群颜色",
-				"type" : "color",
-				"value" : "0.7254902 0.9294118 0.9490196"
-			},
-			"contrast" : 
-			{
-				"fraction" : true,
-				"index" : 18,
-				"max" : 2,
-				"min" : 0.5,
-				"order" : 118,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "对比度",
-				"type" : "slider",
-				"value" : 1.2
-			},
-			"count" : 
-			{
-				"index" : 0,
-				"max" : 3000,
-				"min" : 0,
-				"order" : 100,
-				"text" : "鸟群数量",
-				"type" : "slider",
-				"value" : 1000
-			},
-			"edge" : 
-			{
-				"fraction" : true,
-				"index" : 7,
-				"max" : 0.35,
-				"min" : 0,
-				"order" : 107,
-				"precision" : 4,
-				"step" : 0.001,
-				"text" : "边缘回转区",
-				"type" : "slider",
-				"value" : 0.18
-			},
-			"fps" : 
-			{
-				"index" : 16,
-				"max" : 120,
-				"min" : 15,
-				"order" : 116,
-				"text" : "帧率上限",
-				"type" : "slider",
-				"value" : 60
-			},
-			"graphHz" : 
-			{
-				"index" : 14,
-				"max" : 30,
-				"min" : 10,
-				"order" : 114,
-				"text" : "动态图刷新率（Hz）",
-				"type" : "slider",
-				"value" : 15
-			},
-			"k" : 
-			{
-				"index" : 12,
-				"max" : 48,
-				"min" : 1,
-				"order" : 112,
-				"text" : "近邻上限 K",
-				"type" : "slider",
-				"value" : 16
-			},
-			"marginBottom" : 
-			{
-				"index" : 24,
-				"max" : 200,
-				"min" : 0,
-				"order" : 124,
-				"text" : "下边距（px）",
-				"type" : "slider",
-				"value" : 18
-			},
-			"marginLeft" : 
-			{
-				"index" : 21,
-				"max" : 200,
-				"min" : 0,
-				"order" : 121,
-				"text" : "左边距（px）",
-				"type" : "slider",
-				"value" : 18
-			},
-			"marginRight" : 
-			{
-				"index" : 22,
-				"max" : 200,
-				"min" : 0,
-				"order" : 122,
-				"text" : "右边距（px）",
-				"type" : "slider",
-				"value" : 18
-			},
-			"marginTop" : 
-			{
-				"index" : 23,
-				"max" : 200,
-				"min" : 0,
-				"order" : 123,
-				"text" : "上边距（px）",
-				"type" : "slider",
-				"value" : 18
-			},
-			"mode" : 
-			{
-				"index" : 13,
-				"options" : 
-				[
-					{
-						"label" : "半径",
-						"value" : "radius"
-					},
-					{
-						"label" : "网格",
-						"value" : "grid"
-					},
-					{
-						"label" : "动态图（实验）",
-						"value" : "graph"
-					}
-				],
-				"order" : 113,
-				"text" : "近邻模式",
-				"type" : "combo",
-				"value" : "radius"
-			},
-			"randomColor" : 
-			{
-				"index" : 19,
-				"order" : 119,
-				"text" : "鸟群渐变配色",
-				"type" : "bool",
-				"value" : false
-			},
-			"renderScale" : 
-			{
-				"fraction" : true,
-				"index" : 15,
-				"max" : 1,
-				"min" : 0.5,
-				"order" : 115,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "渲染比例",
-				"type" : "slider",
-				"value" : 1
-			},
-			"schemecolor" : 
-			{
-				"order" : 0,
-				"text" : "ui_browse_properties_scheme_color",
-				"type" : "color",
-				"value" : "0 0 0"
-			},
-			"separation" : 
-			{
-				"fraction" : true,
-				"index" : 4,
-				"max" : 4,
-				"min" : 0,
-				"order" : 104,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "分离权重",
-				"type" : "slider",
-				"value" : 1.5
-			},
-			"size" : 
-			{
-				"fraction" : true,
-				"index" : 1,
-				"max" : 8,
-				"min" : 1,
-				"order" : 101,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "鸟体大小",
-				"type" : "slider",
-				"value" : 4
-			},
-			"speed" : 
-			{
-				"index" : 2,
-				"max" : 240,
-				"min" : 20,
-				"order" : 102,
-				"text" : "飞行速度（px/s）",
-				"type" : "slider",
-				"value" : 90
-			},
-			"speedError" : 
-			{
-				"fraction" : true,
-				"index" : 3,
-				"max" : 0.5,
-				"min" : 0,
-				"order" : 103,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "个体速度差异",
-				"type" : "slider",
-				"value" : 0.15
-			},
-			"trailDuration" : 
-			{
-				"fraction" : true,
-				"index" : 9,
-				"max" : 2.5,
-				"min" : 0.1,
-				"order" : 109,
-				"precision" : 3,
-				"step" : 0.01,
-				"text" : "拖尾时长（秒）",
-				"type" : "slider",
-				"value" : 0.8
-			},
-			"trailHz" : 
-			{
-				"index" : 17,
-				"max" : 60,
-				"min" : 10,
-				"order" : 117,
-				"text" : "拖尾采样率",
-				"type" : "slider",
-				"value" : 30
-			},
-			"trails" : 
-			{
-				"index" : 8,
-				"order" : 108,
-				"text" : "显示拖尾",
-				"type" : "bool",
-				"value" : true
-			}
-		}
-	},
-	"preview" : "preview.jpg",
-	"ratingsex" : "none",
-	"ratingviolence" : "none",
-	"snapshotformat" : -1,
-	"snapshotoverlay" : "",
-	"tags" : [ "Unspecified" ],
-	"title" : "【实时演算】Reynolds 群飞",
-	"type" : "web",
-	"version" : 1,
-	"workshopid" : "3824994256",
-	"workshopurl" : "steam://url/CommunityFilePage/3824994256"
+  "contentrating": "Everyone",
+  "description": "雷格雷诺兹鸟群实验模型",
+  "file": "index.html",
+  "general": {
+    "properties": {
+      "alignment": {
+        "fraction": true,
+        "index": 5,
+        "max": 4,
+        "min": 0,
+        "order": 105,
+        "precision": 3,
+        "step": 0.01,
+        "text": "对齐权重",
+        "type": "slider",
+        "value": 1
+      },
+      "avoidTaskbar": {
+        "index": 15,
+        "order": 115,
+        "text": "避开任务栏",
+        "type": "bool",
+        "value": true
+      },
+      "brightness": {
+        "fraction": true,
+        "index": 9,
+        "max": 2,
+        "min": 0.1,
+        "order": 109,
+        "precision": 3,
+        "step": 0.01,
+        "text": "亮度",
+        "type": "slider",
+        "value": 1.31
+      },
+      "cohesion": {
+        "fraction": true,
+        "index": 6,
+        "max": 4,
+        "min": 0,
+        "order": 106,
+        "precision": 3,
+        "step": 0.01,
+        "text": "聚合权重",
+        "type": "slider",
+        "value": 0.65
+      },
+      "color": {
+        "index": 8,
+        "order": 108,
+        "text": "鸟群颜色",
+        "type": "color",
+        "value": "0.5176470588235295 0.8470588235294118 0.8784313725490196"
+      },
+      "contrast": {
+        "fraction": true,
+        "index": 10,
+        "max": 2,
+        "min": 0.5,
+        "order": 110,
+        "precision": 3,
+        "step": 0.01,
+        "text": "对比度",
+        "type": "slider",
+        "value": 1.2
+      },
+      "count": {
+        "index": 0,
+        "max": 3000,
+        "min": 0,
+        "order": 100,
+        "text": "鸟群数量",
+        "type": "slider",
+        "value": 1500
+      },
+      "edge": {
+        "fraction": true,
+        "index": 7,
+        "max": 0.35,
+        "min": 0,
+        "order": 107,
+        "precision": 4,
+        "step": 0.001,
+        "text": "边缘回转区",
+        "type": "slider",
+        "value": 0.175
+      },
+      "fps": {
+        "index": 24,
+        "max": 120,
+        "min": 15,
+        "order": 124,
+        "text": "帧率上限",
+        "type": "slider",
+        "value": 60
+      },
+      "marginBottom": {
+        "index": 17,
+        "max": 200,
+        "min": 0,
+        "order": 117,
+        "text": "下边距（px）",
+        "type": "slider",
+        "value": 0
+      },
+      "marginLeft": {
+        "index": 18,
+        "max": 200,
+        "min": 0,
+        "order": 118,
+        "text": "左边距（px）",
+        "type": "slider",
+        "value": 0
+      },
+      "marginRight": {
+        "index": 19,
+        "max": 200,
+        "min": 0,
+        "order": 119,
+        "text": "右边距（px）",
+        "type": "slider",
+        "value": 0
+      },
+      "marginTop": {
+        "index": 16,
+        "max": 200,
+        "min": 0,
+        "order": 116,
+        "text": "上边距（px）",
+        "type": "slider",
+        "value": 0
+      },
+      "randomColor": {
+        "index": 11,
+        "order": 111,
+        "text": "鸟群渐变配色",
+        "type": "bool",
+        "value": false
+      },
+      "renderScale": {
+        "fraction": true,
+        "index": 23,
+        "max": 1,
+        "min": 0.5,
+        "order": 123,
+        "precision": 3,
+        "step": 0.01,
+        "text": "渲染比例",
+        "type": "slider",
+        "value": 1
+      },
+      "schemecolor": {
+        "order": 0,
+        "text": "ui_browse_properties_scheme_color",
+        "type": "color",
+        "value": "0 0 0"
+      },
+      "separation": {
+        "fraction": true,
+        "index": 4,
+        "max": 4,
+        "min": 0,
+        "order": 104,
+        "precision": 3,
+        "step": 0.01,
+        "text": "分离权重",
+        "type": "slider",
+        "value": 1.38
+      },
+      "size": {
+        "fraction": true,
+        "index": 1,
+        "max": 16,
+        "min": 1,
+        "order": 101,
+        "precision": 3,
+        "step": 0.01,
+        "text": "鸟体大小",
+        "type": "slider",
+        "value": 6.58
+      },
+      "speed": {
+        "index": 2,
+        "max": 240,
+        "min": 20,
+        "order": 102,
+        "text": "飞行速度（px/s）",
+        "type": "slider",
+        "value": 87
+      },
+      "speedError": {
+        "fraction": true,
+        "index": 3,
+        "max": 0.5,
+        "min": 0,
+        "order": 103,
+        "precision": 3,
+        "step": 0.01,
+        "text": "个体速度差异",
+        "type": "slider",
+        "value": 0.07
+      },
+      "trailDuration": {
+        "fraction": true,
+        "index": 13,
+        "max": 0.5,
+        "min": 0.1,
+        "order": 113,
+        "precision": 3,
+        "step": 0.01,
+        "text": "拖尾时长（秒）",
+        "type": "slider",
+        "value": 0.28
+      },
+      "trailHz": {
+        "index": 14,
+        "max": 60,
+        "min": 10,
+        "order": 114,
+        "text": "拖尾采样率",
+        "type": "slider",
+        "value": 30
+      },
+      "trails": {
+        "index": 12,
+        "order": 112,
+        "text": "显示拖尾",
+        "type": "bool",
+        "value": true
+      }
+    }
+  },
+  "preview": "preview.jpg",
+  "ratingsex": "none",
+  "ratingviolence": "none",
+  "snapshotformat": -1,
+  "snapshotoverlay": "",
+  "tags": ["Unspecified"],
+  "title": "【实时演算】Reynolds 群飞",
+  "type": "web",
+  "version": 1,
+  "workshopid": "3824994256",
+  "workshopurl": "steam://url/CommunityFilePage/3824994256"
 }

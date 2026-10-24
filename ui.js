@@ -323,30 +323,23 @@
 
     addSection("鸟群运动", ["count", "size", "speed", "speedError"]);
     addSection("群体规则", ["separation", "alignment", "cohesion", "edge"]);
-    addSection("颜色与拖尾", [
-      "trails",
-      "trailDuration",
+    addSection("颜色与亮度", [
       "color",
       "brightness",
       "contrast",
       "randomColor",
     ]);
+    addSection("飞行拖尾", ["trails", "trailDuration", "trailHz"]);
     addSection("活动区域", [
       "avoidTaskbar",
-      "marginLeft",
-      "marginRight",
       "marginTop",
       "marginBottom",
-    ]);
-    addAdvanced("邻居计算", "更改近邻搜索方式与动态图更新频率。", [
-      "k",
-      "mode",
-      "graphHz",
+      "marginLeft",
+      "marginRight",
     ]);
     addAdvanced("渲染性能", "帧率限制同时受 Wallpaper Engine 全局上限影响。", [
       "renderScale",
       "fps",
-      "trailHz",
     ]);
 
     function updateControl(key) {
