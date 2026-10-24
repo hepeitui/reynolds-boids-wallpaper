@@ -77,6 +77,9 @@
         "exitY",
       ])
         this[key] = new Float32Array(this.capacity);
+      this.hue = new Float32Array(this.capacity);
+      this.previousHue = new Float32Array(this.capacity);
+      this.colors = new B.FlockColors(this.capacity);
       this._unitX = new Float64Array(this.capacity);
       this._unitY = new Float64Array(this.capacity);
       this.id = new Uint32Array(this.capacity);
@@ -183,6 +186,7 @@
       this.vy[i] = Math.sin(angle) * speed;
       this.id[i] = this.nextId++;
       this.generation[i]++;
+      this.colors.spawn(this, i);
       this.state[i] = 1;
       this.boost[i] = 0;
       this.deathProgress[i] = 0;
@@ -277,6 +281,7 @@
         turnRoom = s.speed * (1 + s.speedError) / 2.4 * 2,
         bandX = s.edge > 0 ? Math.max(bw * s.edge, turnRoom) : 0,
         bandY = s.edge > 0 ? Math.max(bh * s.edge, turnRoom) : 0;
+      this.colors.step(this, dt);
       this.neighbors.update(this, dt);
       let entering = 0,
         leaving = 0;

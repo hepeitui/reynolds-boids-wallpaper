@@ -5,7 +5,7 @@
       this.capacity = capacity;
       this.length = 156;
       this.ghostCapacity = 6000;
-      for (const k of ["x", "y"])
+      for (const k of ["x", "y", "hue"])
         this[k] = new Float32Array(capacity * this.length);
       this.t = new Float64Array(capacity * this.length);
       this.head = new Int16Array(capacity);
@@ -14,6 +14,7 @@
       this.lastGeneration = new Uint32Array(capacity);
       this.gx = new Float32Array(this.ghostCapacity * this.length);
       this.gy = new Float32Array(this.gx.length);
+      this.ghue = new Float32Array(this.gx.length);
       this.gt = new Float64Array(this.gx.length);
       this.gh = new Int16Array(this.ghostCapacity);
       this.gc = new Uint8Array(this.ghostCapacity);
@@ -36,6 +37,7 @@
         b = g * this.length;
       this.gx.set(this.x.subarray(a, a + this.length), b);
       this.gy.set(this.y.subarray(a, a + this.length), b);
+      this.ghue.set(this.hue.subarray(a, a + this.length), b);
       this.gt.set(this.t.subarray(a, a + this.length), b);
       this.gh[g] = this.head[i];
       this.gc[g] = this.count[i];
@@ -47,11 +49,12 @@
       this.head[i] = -1;
       this.revision++;
     }
-    append(i, x, y, time) {
+    append(i, x, y, time, hue) {
       const head = (this.head[i] + 1) % this.length,
         position = i * this.length + head;
       this.x[position] = x;
       this.y[position] = y;
+      this.hue[position] = hue;
       this.t[position] = time;
       this.head[i] = head;
       this.count[i] = Math.min(this.length, this.count[i] + 1);
@@ -62,24 +65,34 @@
       if (
         sim.deathStarted &&
         sim.deathGeneration &&
+        sim.generation &&
+        sim.generation[i] === generation &&
         sim.deathStarted[i] >= 0 &&
         sim.deathGeneration[i] === generation
       ) {
         time = sim.deathStarted[i];
         const x = sim.deathX ? sim.deathX[i] : sim.x[i],
           y = sim.deathY ? sim.deathY[i] : sim.y[i],
+          stepStart = sim.time - 1 / 60,
+          hueAlpha = Math.max(0, Math.min(1, (time - stepStart) * 60)),
+          hue =
+            sim.previousHue[i] +
+            (sim.hue[i] - sim.previousHue[i]) * hueAlpha,
           base = i * this.length,
           head = this.head[i],
           lastTime = this.t[base + head];
-        if (time > lastTime) this.append(i, x, y, time);
+        if (time > lastTime) this.append(i, x, y, time, hue);
         else if (time === lastTime) {
           this.x[base + head] = x;
           this.y[base + head] = y;
+          this.hue[base + head] = hue;
         }
       }
       this.retire(i, fallbackTime);
     }
     record(sim) {
+      if (!sim.hue || !sim.previousHue)
+        throw new TypeError("History.record requires simulation hue arrays.");
       const target = Number.isFinite(this.lastSample)
         ? this.lastSample + 1 / 60
         : sim.time;
@@ -100,11 +113,15 @@
           this.lastGeneration[i] = generation;
         }
         const interpolate = this.count[i] > 0 && sim.nx && sim.ny;
+        const hue = interpolate
+          ? sim.previousHue[i] + (sim.hue[i] - sim.previousHue[i]) * alpha
+          : sim.hue[i];
         this.append(
           i,
           interpolate ? sim.nx[i] + (sim.x[i] - sim.nx[i]) * alpha : sim.x[i],
           interpolate ? sim.ny[i] + (sim.y[i] - sim.ny[i]) * alpha : sim.y[i],
           target,
+          hue,
         );
       }
       if (sample) {
@@ -125,6 +142,7 @@
             this.length,
             i,
             this.lastGeneration[i],
+            this.hue,
           );
       for (let g = 0; g < this.ghostCapacity; g++)
         if (this.gc[g] > 1 && this.until[g] > sim.time)
@@ -138,6 +156,7 @@
             this.length,
             this.ghostSlot[g],
             this.ghostGeneration[g],
+            this.ghue,
           );
     }
     hasVisible(time) {

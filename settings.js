@@ -143,7 +143,7 @@
     randomColor: Object.freeze({
       kind: "boolean",
       label: "鸟群渐变配色",
-      description: "按位置连续渐变，聚集的鸟颜色相近，拖尾沿轨迹平滑过渡。",
+      description: "按密集程度与飞行方向独立分群；每群前排核心领鸟回归本色，其余按65%本群领鸟、35%自身本色缓慢跟随。",
     }),
     avoidTaskbar: Object.freeze({
       kind: "boolean",

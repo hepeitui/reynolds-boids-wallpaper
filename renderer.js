@@ -38,13 +38,6 @@
   var TRAIL_CORNERS = new Float32Array([0, -1, 0, 1, 1, -1, 1, -1, 0, 1, 1, 1]);
   var DEFAULT_COLOR = "#b9edf2";
 
-  // One continuous spatial field for birds, trail heads and retired trails.
-  var SPATIAL_HUE_GLSL = `
-float spatialHue(vec2 point, vec2 viewport) {
-  float span = max(max(viewport.x, viewport.y), 720.0);
-  return 0.58 + dot(point - viewport * 0.5, vec2(0.8, 0.35)) / span;
-}
-`;
 
   var BIRD_VERTEX_SHADER = `#version 300 es
 precision highp float;
@@ -55,6 +48,7 @@ layout(location = 3) in vec2 i_center;
 layout(location = 4) in vec2 i_velocity;
 layout(location = 5) in float i_phase;
 layout(location = 6) in float i_deathProgress;
+layout(location = 7) in float i_hue;
 uniform vec2 u_viewport;
 uniform float u_size;
 uniform float u_flapPhase;
@@ -62,7 +56,6 @@ out float v_luminance;
 out float v_depth;
 out float v_deathProgress;
 out float v_hue;
-${SPATIAL_HUE_GLSL}
 void main() {
   vec2 direction = i_velocity;
   float speed = length(direction);
@@ -93,7 +86,7 @@ void main() {
   v_luminance = a_luminance;
   v_depth = depth;
   v_deathProgress = i_deathProgress;
-  v_hue = spatialHue(i_center, u_viewport);
+  v_hue = i_hue;
 }`;
 
   var BIRD_FRAGMENT_SHADER = `#version 300 es
@@ -125,8 +118,8 @@ void main() {
   var TRAIL_VERTEX_SHADER = `#version 300 es
 precision highp float;
 layout(location = 0) in vec2 a_corner;
-layout(location = 1) in vec3 a_start;
-layout(location = 2) in vec3 a_end;
+layout(location = 1) in vec4 a_start;
+layout(location = 2) in vec4 a_end;
 uniform vec2 u_viewport;
 uniform float u_now;
 uniform float u_duration;
@@ -136,7 +129,6 @@ out float v_fade;
 out float v_distance;
 out float v_halfWidth;
 out float v_hue;
-${SPATIAL_HUE_GLSL}
 void main() {
   float cutoff = u_now - u_duration;
   float delta = a_end.z - a_start.z;
@@ -152,6 +144,10 @@ void main() {
   }
   float along = a_corner.x;
   float t = mix(visibleFrom, visibleTo, along);
+  float hueDelta = mod(a_end.w - a_start.w + 0.5, 1.0) - 0.5;
+  float hueAlong = delta > 0.000001
+    ? clamp((t - a_start.z) / delta, 0.0, 1.0)
+    : along;
   float age = clamp((t - cutoff) / u_duration, 0.0, 1.0);
   float fade = smoothstep(0.0, 0.38, age);
   vec2 tangent = to - from;
@@ -171,7 +167,7 @@ void main() {
   v_fade = valid ? fade : 0.0;
   v_distance = a_corner.y * extent;
   v_halfWidth = halfWidth;
-  v_hue = spatialHue(mix(from, to, along), u_viewport);
+  v_hue = a_start.w + hueDelta * hueAlong;
 }`;
 
   var TRAIL_FRAGMENT_SHADER = `#version 300 es
@@ -412,8 +408,8 @@ void main() {
 
   Renderer.prototype._ensureCpuBuffers = function () {
     if (this._birdData) return;
-    this._birdData = new Float32Array(MAX_BIRDS * 6);
-    this._trailData = new Float32Array(MAX_TRAIL_SEGMENTS * 6);
+    this._birdData = new Float32Array(MAX_BIRDS * 7);
+    this._trailData = new Float32Array(MAX_TRAIL_SEGMENTS * 8);
     this._phases = new Float32Array(MAX_BIRDS);
     this._phaseGeneration = new Uint32Array(MAX_BIRDS);
     for (var i = 0; i < MAX_BIRDS; i += 1) {
@@ -499,17 +495,20 @@ void main() {
         gl.DYNAMIC_DRAW,
       );
       gl.enableVertexAttribArray(3);
-      gl.vertexAttribPointer(3, 2, gl.FLOAT, false, 24, 0);
+      gl.vertexAttribPointer(3, 2, gl.FLOAT, false, 28, 0);
       gl.vertexAttribDivisor(3, 1);
       gl.enableVertexAttribArray(4);
-      gl.vertexAttribPointer(4, 2, gl.FLOAT, false, 24, 8);
+      gl.vertexAttribPointer(4, 2, gl.FLOAT, false, 28, 8);
       gl.vertexAttribDivisor(4, 1);
       gl.enableVertexAttribArray(5);
-      gl.vertexAttribPointer(5, 1, gl.FLOAT, false, 24, 16);
+      gl.vertexAttribPointer(5, 1, gl.FLOAT, false, 28, 16);
       gl.vertexAttribDivisor(5, 1);
       gl.enableVertexAttribArray(6);
-      gl.vertexAttribPointer(6, 1, gl.FLOAT, false, 24, 20);
+      gl.vertexAttribPointer(6, 1, gl.FLOAT, false, 28, 20);
       gl.vertexAttribDivisor(6, 1);
+      gl.enableVertexAttribArray(7);
+      gl.vertexAttribPointer(7, 1, gl.FLOAT, false, 28, 24);
+      gl.vertexAttribDivisor(7, 1);
 
       gl.bindVertexArray(this._trailVao);
       gl.bindBuffer(gl.ARRAY_BUFFER, this._trailCornerBuffer);
@@ -523,10 +522,10 @@ void main() {
         gl.DYNAMIC_DRAW,
       );
       gl.enableVertexAttribArray(1);
-      gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 0);
+      gl.vertexAttribPointer(1, 4, gl.FLOAT, false, 32, 0);
       gl.vertexAttribDivisor(1, 1);
       gl.enableVertexAttribArray(2);
-      gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 24, 12);
+      gl.vertexAttribPointer(2, 4, gl.FLOAT, false, 32, 16);
       gl.vertexAttribDivisor(2, 1);
       gl.bindVertexArray(null);
       gl.bindBuffer(gl.ARRAY_BUFFER, null);
@@ -689,9 +688,17 @@ void main() {
   };
 
   Renderer.prototype._collectBirds = function (sim) {
-    if (!sim || !sim.x || !sim.y || !sim.vx || !sim.vy || !sim.active) {
+    if (
+      !sim ||
+      !sim.x ||
+      !sim.y ||
+      !sim.vx ||
+      !sim.vy ||
+      !sim.hue ||
+      !sim.active
+    ) {
       throw new TypeError(
-        "render(sim, history, settings) requires simulation position, velocity, and active arrays.",
+        "render(sim, history, settings) requires simulation position, velocity, hue, and active arrays.",
       );
     }
     var capacity = sim.x.length;
@@ -724,9 +731,12 @@ void main() {
       var y = sim.y[slot];
       var vx = sim.vx[slot];
       var vy = sim.vy[slot];
+      var hue = sim.hue[slot];
       if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
       if (!Number.isFinite(vx)) vx = 0;
       if (!Number.isFinite(vy)) vy = 0;
+      if (!Number.isFinite(hue))
+        throw new TypeError("Simulation bird hues must be finite.");
       var death = state && state[slot] === 4;
       if (death && (!progress || slot >= progress.length)) {
         throw new TypeError(
@@ -738,7 +748,7 @@ void main() {
         this._phaseGeneration[slot] = generation;
         this._phases[slot] = phaseFor(slot, generation);
       }
-      var offset = written * 6;
+      var offset = written * 7;
       data[offset] = x;
       data[offset + 1] = y;
       data[offset + 2] = vx;
@@ -749,6 +759,7 @@ void main() {
           ? clamp(progress[slot], 0, 1)
           : 0
         : -1;
+      data[offset + 6] = hue;
       if (death) dying += 1;
       written += 1;
     }
@@ -764,10 +775,13 @@ void main() {
     head,
     count,
     ringLength,
+    slot,
+    generation,
+    hues,
   ) {
-    if (!xs || !ys || !ts)
+    if (!xs || !ys || !ts || !hues)
       throw new TypeError(
-        "History trail callback must provide x, y, and timestamp arrays.",
+        "History trail callback must provide x, y, timestamp, and hue arrays.",
       );
     if (
       !Number.isInteger(ringLength) ||
@@ -786,7 +800,8 @@ void main() {
       base < 0 ||
       base + ringLength > xs.length ||
       base + ringLength > ys.length ||
-      base + ringLength > ts.length
+      base + ringLength > ts.length ||
+      base + ringLength > hues.length
     ) {
       throw new RangeError("History trail base is outside its sample arrays.");
     }
@@ -818,24 +833,30 @@ void main() {
         var y0 = ys[base + previous];
         var x1 = xs[base + current];
         var y1 = ys[base + current];
+        var hue0 = hues[base + previous];
+        var hue1 = hues[base + current];
         if (
           Number.isFinite(x0) &&
           Number.isFinite(y0) &&
           Number.isFinite(x1) &&
-          Number.isFinite(y1)
+          Number.isFinite(y1) &&
+          Number.isFinite(hue0) &&
+          Number.isFinite(hue1)
         ) {
           if (segments >= MAX_TRAIL_SEGMENTS) {
             throw new RangeError(
               "History exceeds the renderer preallocated trail segment capacity.",
             );
           }
-          var offset = segments * 6;
+          var offset = segments * 8;
           data[offset] = x0;
           data[offset + 1] = y0;
           data[offset + 2] = t0 - epoch;
-          data[offset + 3] = x1;
-          data[offset + 4] = y1;
-          data[offset + 5] = t1 - epoch;
+          data[offset + 3] = hue0;
+          data[offset + 4] = x1;
+          data[offset + 5] = y1;
+          data[offset + 6] = t1 - epoch;
+          data[offset + 7] = hue1;
           segments += 1;
         }
       }
@@ -940,9 +961,13 @@ void main() {
     var trailCount = 0;
     var trailUploadStart = 0;
     if (trailsEnabled) {
-      if (!history || typeof history.forEachTrail !== "function") {
+      if (
+        !history ||
+        typeof history.forEachTrail !== "function" ||
+        !history.hue
+      ) {
         throw new TypeError(
-          "render(sim, history, settings) requires history.forEachTrail when trails are enabled.",
+          "render(sim, history, settings) requires hue-aware history when trails are enabled.",
         );
       }
       this._trailNow = time;
@@ -973,7 +998,7 @@ void main() {
         this._cachedHistoryEpoch = epoch;
       } else {
         this._trailSegmentCount = this._cachedHistoricalCount;
-        trailUploadStart = this._cachedHistoricalCount * 6;
+        trailUploadStart = this._cachedHistoricalCount * 8;
       }
       // Join the last fixed-rate sample to the current bird without changing history.
       for (var a = 0; a < sim.count; a += 1) {
@@ -984,13 +1009,15 @@ void main() {
         if (time <= sampleTime + 0.000001) continue;
         if (this._trailSegmentCount >= MAX_TRAIL_SEGMENTS)
           throw new RangeError("Trail head capacity exceeded.");
-        var p = this._trailSegmentCount++ * 6;
+        var p = this._trailSegmentCount++ * 8;
         this._trailData[p] = history.x[sampleIndex];
         this._trailData[p + 1] = history.y[sampleIndex];
         this._trailData[p + 2] = sampleTime - epoch;
-        this._trailData[p + 3] = sim.x[slot];
-        this._trailData[p + 4] = sim.y[slot];
-        this._trailData[p + 5] = renderTime;
+        this._trailData[p + 3] = history.hue[sampleIndex];
+        this._trailData[p + 4] = sim.x[slot];
+        this._trailData[p + 5] = sim.y[slot];
+        this._trailData[p + 6] = renderTime;
+        this._trailData[p + 7] = sim.hue[slot];
       }
       trailCount = this._trailSegmentCount;
     }
@@ -1006,11 +1033,11 @@ void main() {
           0,
           this._birdData,
           0,
-          birdCount * 6,
+          birdCount * 7,
         );
-        stats.uploadBytes += birdCount * 6 * Float32Array.BYTES_PER_ELEMENT;
+        stats.uploadBytes += birdCount * 7 * Float32Array.BYTES_PER_ELEMENT;
       }
-      var trailUploadFloats = trailCount * 6 - trailUploadStart;
+      var trailUploadFloats = trailCount * 8 - trailUploadStart;
       if (trailUploadFloats > 0) {
         gl.bindBuffer(gl.ARRAY_BUFFER, this._trailSegmentBuffer);
         gl.bufferSubData(
