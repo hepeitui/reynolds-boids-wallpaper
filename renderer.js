@@ -341,6 +341,8 @@ void main() {
     this._dpr = root.devicePixelRatio || 1;
     this._scale = 1;
     this._birdData = null;
+    this._birdDataDirty = true;
+    this._uploadedBirdCount = -1;
     this._trailData = null;
     this._phases = null;
     this._phaseGeneration = null;
@@ -425,6 +427,8 @@ void main() {
     }
     this._ensureCpuBuffers();
     this.gl = gl;
+    this._birdDataDirty = true;
+    this._uploadedBirdCount = -1;
     this._cachedHistory = null;
     this._cachedHistoryRevision = -1;
     try {
@@ -749,6 +753,13 @@ void main() {
         this._phases[slot] = phaseFor(slot, generation);
       }
       var offset = written * 7;
+      var oldX = data[offset];
+      var oldY = data[offset + 1];
+      var oldVx = data[offset + 2];
+      var oldVy = data[offset + 3];
+      var oldPhase = data[offset + 4];
+      var oldDeath = data[offset + 5];
+      var oldHue = data[offset + 6];
       data[offset] = x;
       data[offset + 1] = y;
       data[offset + 2] = vx;
@@ -760,6 +771,16 @@ void main() {
           : 0
         : -1;
       data[offset + 6] = hue;
+      if (
+        oldX !== data[offset] ||
+        oldY !== data[offset + 1] ||
+        oldVx !== data[offset + 2] ||
+        oldVy !== data[offset + 3] ||
+        oldPhase !== data[offset + 4] ||
+        oldDeath !== data[offset + 5] ||
+        oldHue !== data[offset + 6]
+      )
+        this._birdDataDirty = true;
       if (death) dying += 1;
       written += 1;
     }
@@ -1026,7 +1047,11 @@ void main() {
     this._pollTimerQueries();
     var timerIndex = this._beginTimerQuery();
     try {
-      if (birdCount > 0) {
+      if (birdCount === 0) this._uploadedBirdCount = 0;
+      if (
+        birdCount > 0 &&
+        (this._birdDataDirty || this._uploadedBirdCount !== birdCount)
+      ) {
         gl.bindBuffer(gl.ARRAY_BUFFER, this._birdInstanceBuffer);
         gl.bufferSubData(
           gl.ARRAY_BUFFER,
@@ -1036,6 +1061,8 @@ void main() {
           birdCount * 7,
         );
         stats.uploadBytes += birdCount * 7 * Float32Array.BYTES_PER_ELEMENT;
+        this._uploadedBirdCount = birdCount;
+        this._birdDataDirty = false;
       }
       var trailUploadFloats = trailCount * 8 - trailUploadStart;
       if (trailUploadFloats > 0) {

@@ -365,6 +365,7 @@
     var sepX = 0;
     var sepY = 0;
     var aggregated = 0;
+    var candidates = 0;
     var separate = sim.settings.separation !== 0;
     var columns = maxX - minX + 1;
     var rows = maxY - minY + 1;
@@ -379,6 +380,10 @@
         if (!mixed && (cellX[head] !== cx || cellY[head] !== cy)) continue;
         var left = cx * size;
         var top = cy * size;
+        var nearX = Math.max(left - x, 0, x - left - size);
+        var nearY = Math.max(top - y, 0, y - top - size);
+        var nearDistanceSq = nearX * nearX + nearY * nearY;
+        if (nearDistanceSq > RADIUS_SQ) continue;
         var farX = Math.max(Math.abs(left - x), Math.abs(left + size - x));
         var farY = Math.max(Math.abs(top - y), Math.abs(top + size - y));
         var whole = !mixed && farX * farX + farY * farY <= RADIUS_SQ;
@@ -391,9 +396,7 @@
           dirX += this._aggregateUnitX[bucket] - own * unitX[source];
           dirY += this._aggregateUnitY[bucket] - own * unitY[source];
           aggregated += count;
-          var nearX = Math.max(left - x, 0, x - left - size);
-          var nearY = Math.max(top - y, 0, y - top - size);
-          if (!separate || nearX * nearX + nearY * nearY > SEPARATION_RADIUS_SQ)
+          if (!separate || nearDistanceSq > SEPARATION_RADIUS_SQ)
             continue;
         }
         for (
@@ -407,7 +410,7 @@
             (mixed && (cellX[candidate] !== cx || cellY[candidate] !== cy))
           )
             continue;
-          this.metrics.queryCandidates++;
+          candidates++;
           var dx = positionsX[candidate] - x;
           var dy = positionsY[candidate] - y;
           var d2 = dx * dx + dy * dy;
@@ -429,6 +432,7 @@
       }
     }
     this.metrics.aggregatedNeighbors += aggregated;
+    this.metrics.queryCandidates += candidates;
     output[0] = total;
     output[1] = sumX;
     output[2] = sumY;

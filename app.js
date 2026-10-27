@@ -20,6 +20,7 @@
     uiFrames = 0;
   let capture = null,
     pendingCpu = 0;
+  let rendererDpr;
   const canvas = document.getElementById("scene");
   const ui = B.createUI(configure, pause, reset, downloadReport);
   const renderer = new B.Renderer(canvas, (text) => {
@@ -41,12 +42,14 @@
   function resize() {
     sim.resize(innerWidth, innerHeight,
       B.Host.workArea(innerWidth, innerHeight, settings.avoidTaskbar));
+    const dpr = devicePixelRatio || 1;
     renderer.resize(
       innerWidth,
       innerHeight,
-      devicePixelRatio || 1,
+      dpr,
       settings.renderScale,
     );
+    rendererDpr = dpr;
     redraw();
   }
   function paused() {
@@ -63,16 +66,21 @@
     wake();
   }
   function configure(patch) {
+    const previousRenderScale = settings.renderScale;
     settings = B.Settings.merge(settings, patch);
     sim.configure(settings);
     updateWorkArea();
     B.Settings.save(settings);
-    renderer.resize(
-      innerWidth,
-      innerHeight,
-      devicePixelRatio || 1,
-      settings.renderScale,
-    );
+    const dpr = devicePixelRatio || 1;
+    if (settings.renderScale !== previousRenderScale || dpr !== rendererDpr) {
+      renderer.resize(
+        innerWidth,
+        innerHeight,
+        dpr,
+        settings.renderScale,
+      );
+      rendererDpr = dpr;
+    }
     redraw();
   }
   function reset() {
