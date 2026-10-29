@@ -1,0 +1,50 @@
+{
+  "nativeBehaviorGroupsPassed": 11,
+  "nativeDifferential": {
+    "steps": 1800,
+    "snapshots": 61,
+    "workers": [
+      1,
+      8
+    ],
+    "sameFinalFingerprint": "1799,9d2053714697d36d"
+  },
+  "browser": {
+    "offlineFileLoaded": true,
+    "pauseFreeze": {
+      "simSteps": 272,
+      "simTime": 4.533333778381348,
+      "submissions": 272
+    },
+    "pausedSettingsRedraw": {
+      "simSteps": 272,
+      "submissions": 273,
+      "canvasPixels": [
+        900,
+        563
+      ]
+    },
+    "resumeOneSecondAdvancedSteps": 60,
+    "pausedWebGLContextRestored": {
+      "submissionsBefore": 334,
+      "submissionsAfter": 335
+    },
+    "zeroCountIdle": {
+      "simSteps": 679,
+      "submissions": 685,
+      "renderedBirds": 0,
+      "renderedTrails": 0,
+      "unchangedForMs": 700
+    },
+    "idleWake": {
+      "simSteps": 727,
+      "renderedBirds": 100
+    },
+    "pageErrors": 0,
+    "migratedRepositoryEntryLoaded": true,
+    "hostFps5ForTwoSeconds": {
+      "submittedFrames": 11,
+      "simulationSteps": 119
+    }
+  }
+}

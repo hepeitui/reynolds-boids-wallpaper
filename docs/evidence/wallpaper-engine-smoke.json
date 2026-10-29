@@ -1,0 +1,14 @@
+{
+  "controlsReturnedZero": true,
+  "desktopSelectionUnchanged": true,
+  "previewWindowClosed": true,
+  "loadedFromStandardMyprojectsDirectory": true,
+  "unicodeCliDirectPathFailed": true,
+  "screenshots": [
+    "wasm-host-default.png",
+    "wasm-host-orange-500.png",
+    "wasm-host-zero.png",
+    "wasm-host-gradient-1000.png"
+  ],
+  "verificationScope": "Functional windowed Wallpaper Engine loading and property changes, not presentation FPS or desktop mode power measurements."
+}

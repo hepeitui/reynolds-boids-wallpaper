@@ -1,0 +1,20 @@
+# Native C++ build directories & intermediate artifacts
+native/build/
+build/
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.building
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Toolchains, workspaces and outputs
+toolchains/
+work/
+outputs/
+.cache/
+.vscode/
+.idea/

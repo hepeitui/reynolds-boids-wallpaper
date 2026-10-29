@@ -1,0 +1,658 @@
+[
+  {
+    "kind": "js",
+    "elapsedMs": 15001.59999999404,
+    "callbackCount": 1980,
+    "cpuTotalMs": 9805.100000075996,
+    "cpuMsPerSecond": 653.60361561966,
+    "submissions": 900,
+    "averageSubmissionsFps": 59.993600682617696,
+    "intervalP50": 15,
+    "intervalP95": 33.5,
+    "intervalP99": 36.80000000447035,
+    "before": {
+      "timestamp": "2026-10-29T14:05:48.455Z",
+      "seed": 20261022,
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.38,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.175,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "#84d8e0",
+        "brightness": 1.31,
+        "contrast": 1.2,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30
+      },
+      "simulationTime": 10.000000000000076,
+      "alive": 3000,
+      "submitted": 812,
+      "droppedSimulationSeconds": 2.701766666666666,
+      "simulationSteps": 1048,
+      "catchUpSteps": 260,
+      "stepAccounting": "Cumulative since page startup and not reset by reset(); simulationSteps counts sim.step calls and catchUpSteps sums max(0, steps per RAF frame - 1).",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25,
+        "pixels": [
+          1800,
+          1125
+        ],
+        "screen": [
+          1440,
+          988
+        ]
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "host": false,
+        "hostFps": 60,
+        "visibility": "visible",
+        "memory": {
+          "used": 78729269,
+          "total": 82588601
+        }
+      },
+      "simulation": {
+        "alive": 3000,
+        "entering": 0,
+        "leaving": 0,
+        "simulationMs": 9.899999998509884,
+        "removed": 0,
+        "born": 3000,
+        "dying": 0,
+        "boundaryDeaths": 0
+      },
+      "neighbors": {
+        "gridBuildMs": 0.10000000149011612,
+        "queryCandidates": 689442,
+        "aggregatedNeighbors": 104895,
+        "aggregateBuildMs": 0,
+        "gridQueries": 3000,
+        "gridEntries": 3000,
+        "maxBucketOccupancy": 47,
+        "medianBucketOccupancy": 8,
+        "occupiedBuckets": 291,
+        "bucketOverflow": 0,
+        "invalidPositions": 0
+      },
+      "renderer": {
+        "drawCalls": 2,
+        "triangles": 84000,
+        "uploadBytes": 948000,
+        "birdInstances": 3000,
+        "dyingInstances": 0,
+        "trailSegments": 27000,
+        "gpuMs": 0.234496,
+        "gpuSamples": 829
+      },
+      "history": {
+        "ghostOverflows": 0
+      },
+      "timing": null,
+      "limits": "Browser submissions are not desktop presentation proof. No direct electrical power measurement."
+    },
+    "after": {
+      "timestamp": "2026-10-29T14:06:03.456Z",
+      "seed": 20261022,
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.38,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.175,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "#84d8e0",
+        "brightness": 1.31,
+        "contrast": 1.2,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30
+      },
+      "simulationTime": 24.983333333333196,
+      "alive": 3000,
+      "submitted": 1712,
+      "droppedSimulationSeconds": 2.701766666666666,
+      "simulationSteps": 1947,
+      "catchUpSteps": 329,
+      "stepAccounting": "Cumulative since page startup and not reset by reset(); simulationSteps counts sim.step calls and catchUpSteps sums max(0, steps per RAF frame - 1).",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25,
+        "pixels": [
+          1800,
+          1125
+        ],
+        "screen": [
+          1440,
+          988
+        ]
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "host": false,
+        "hostFps": 60,
+        "visibility": "visible",
+        "memory": {
+          "used": 78361017,
+          "total": 83375033
+        }
+      },
+      "simulation": {
+        "alive": 3000,
+        "entering": 0,
+        "leaving": 0,
+        "simulationMs": 7.700000002980232,
+        "removed": 47,
+        "born": 3047,
+        "dying": 0,
+        "boundaryDeaths": 47
+      },
+      "neighbors": {
+        "gridBuildMs": 0,
+        "queryCandidates": 619078,
+        "aggregatedNeighbors": 97563,
+        "aggregateBuildMs": 0,
+        "gridQueries": 3000,
+        "gridEntries": 3000,
+        "maxBucketOccupancy": 38,
+        "medianBucketOccupancy": 8,
+        "occupiedBuckets": 268,
+        "bucketOverflow": 0,
+        "invalidPositions": 0
+      },
+      "renderer": {
+        "drawCalls": 2,
+        "triangles": 84000,
+        "uploadBytes": 948000,
+        "birdInstances": 3000,
+        "dyingInstances": 0,
+        "trailSegments": 27000,
+        "gpuMs": 0.233472,
+        "gpuSamples": 1730
+      },
+      "history": {
+        "ghostOverflows": 0
+      },
+      "timing": null,
+      "limits": "Browser submissions are not desktop presentation proof. No direct electrical power measurement."
+    },
+    "round": 1
+  },
+  {
+    "kind": "wasm",
+    "elapsedMs": 15000.19999999553,
+    "callbackCount": 2159,
+    "cpuTotalMs": 5767.499999977648,
+    "cpuMsPerSecond": 384.4948734003125,
+    "submissions": 900,
+    "averageSubmissionsFps": 59.999200010684405,
+    "intervalP50": 14.799999997019768,
+    "intervalP95": 22.299999997019768,
+    "intervalP99": 23.299999997019768,
+    "before": {
+      "paused": false,
+      "inHostWE": true,
+      "wasmLoaded": true,
+      "simTime": 10.000000953674316,
+      "simSteps": 3602,
+      "submittedFrames": 3612,
+      "activeBirds": 3000,
+      "enteringBirds": 0,
+      "leavingBirds": 0,
+      "dyingBirds": 0,
+      "candidates": 678807,
+      "renderedBirds": 3000,
+      "renderedTrails": 21000,
+      "simulationMs": 4.800000190734863,
+      "measuredFps": 60,
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25
+      },
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.3800000000000001,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.17500000000000002,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "0.518 0.847 0.878",
+        "colorRgb": [
+          0.518,
+          0.847,
+          0.878
+        ],
+        "brightness": 1.31,
+        "contrast": 1.2000000000000002,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "taskbarPosition": "bottom",
+        "taskbarMargin": 48,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30,
+        "showStats": false
+      }
+    },
+    "after": {
+      "paused": false,
+      "inHostWE": true,
+      "wasmLoaded": true,
+      "simTime": 25.000001907348633,
+      "simSteps": 4502,
+      "submittedFrames": 4512,
+      "activeBirds": 3000,
+      "enteringBirds": 0,
+      "leavingBirds": 0,
+      "dyingBirds": 0,
+      "candidates": 637621,
+      "renderedBirds": 3000,
+      "renderedTrails": 27000,
+      "simulationMs": 4.699999809265137,
+      "measuredFps": 61,
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25
+      },
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.3800000000000001,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.17500000000000002,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "0.518 0.847 0.878",
+        "colorRgb": [
+          0.518,
+          0.847,
+          0.878
+        ],
+        "brightness": 1.31,
+        "contrast": 1.2000000000000002,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "taskbarPosition": "bottom",
+        "taskbarMargin": 48,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30,
+        "showStats": false
+      }
+    },
+    "round": 1
+  },
+  {
+    "kind": "wasm",
+    "elapsedMs": 15000.5,
+    "callbackCount": 2155,
+    "cpuTotalMs": 5959.3999999165535,
+    "cpuMsPerSecond": 397.28009065808163,
+    "submissions": 900,
+    "averageSubmissionsFps": 59.998000066664446,
+    "intervalP50": 15,
+    "intervalP95": 22.100000001490116,
+    "intervalP99": 23.600000001490116,
+    "before": {
+      "paused": false,
+      "inHostWE": true,
+      "wasmLoaded": true,
+      "simTime": 10.000000953674316,
+      "simSteps": 5102,
+      "submittedFrames": 5115,
+      "activeBirds": 3000,
+      "enteringBirds": 0,
+      "leavingBirds": 0,
+      "dyingBirds": 0,
+      "candidates": 678807,
+      "renderedBirds": 3000,
+      "renderedTrails": 21000,
+      "simulationMs": 4.699999809265137,
+      "measuredFps": 61,
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25
+      },
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.3800000000000001,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.17500000000000002,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "0.518 0.847 0.878",
+        "colorRgb": [
+          0.518,
+          0.847,
+          0.878
+        ],
+        "brightness": 1.31,
+        "contrast": 1.2000000000000002,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "taskbarPosition": "bottom",
+        "taskbarMargin": 48,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30,
+        "showStats": false
+      }
+    },
+    "after": {
+      "paused": false,
+      "inHostWE": true,
+      "wasmLoaded": true,
+      "simTime": 25.000001907348633,
+      "simSteps": 6002,
+      "submittedFrames": 6015,
+      "activeBirds": 3000,
+      "enteringBirds": 0,
+      "leavingBirds": 0,
+      "dyingBirds": 0,
+      "candidates": 637621,
+      "renderedBirds": 3000,
+      "renderedTrails": 27000,
+      "simulationMs": 5.300000190734863,
+      "measuredFps": 59,
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25
+      },
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.3800000000000001,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.17500000000000002,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "0.518 0.847 0.878",
+        "colorRgb": [
+          0.518,
+          0.847,
+          0.878
+        ],
+        "brightness": 1.31,
+        "contrast": 1.2000000000000002,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "taskbarPosition": "bottom",
+        "taskbarMargin": 48,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30,
+        "showStats": false
+      }
+    },
+    "round": 2
+  },
+  {
+    "kind": "js",
+    "elapsedMs": 15012.29999999702,
+    "callbackCount": 1912,
+    "cpuTotalMs": 11011.099999949336,
+    "cpuMsPerSecond": 733.4718863832671,
+    "submissions": 901,
+    "averageSubmissionsFps": 60.017452355746876,
+    "intervalP50": 15.799999997019768,
+    "intervalP95": 23.69999999552965,
+    "intervalP99": 26.399999998509884,
+    "before": {
+      "timestamp": "2026-10-29T14:07:03.567Z",
+      "seed": 20261022,
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.38,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.175,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "#84d8e0",
+        "brightness": 1.31,
+        "contrast": 1.2,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30
+      },
+      "simulationTime": 10.000000000000076,
+      "alive": 3000,
+      "submitted": 2313,
+      "droppedSimulationSeconds": 2.701766666666666,
+      "simulationSteps": 2547,
+      "catchUpSteps": 375,
+      "stepAccounting": "Cumulative since page startup and not reset by reset(); simulationSteps counts sim.step calls and catchUpSteps sums max(0, steps per RAF frame - 1).",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25,
+        "pixels": [
+          1800,
+          1125
+        ],
+        "screen": [
+          1440,
+          988
+        ]
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "host": false,
+        "hostFps": 60,
+        "visibility": "visible",
+        "memory": {
+          "used": 77480269,
+          "total": 80229305
+        }
+      },
+      "simulation": {
+        "alive": 3000,
+        "entering": 0,
+        "leaving": 0,
+        "simulationMs": 8,
+        "removed": 0,
+        "born": 3000,
+        "dying": 0,
+        "boundaryDeaths": 0
+      },
+      "neighbors": {
+        "gridBuildMs": 0.10000000149011612,
+        "queryCandidates": 689442,
+        "aggregatedNeighbors": 104895,
+        "aggregateBuildMs": 0,
+        "gridQueries": 3000,
+        "gridEntries": 3000,
+        "maxBucketOccupancy": 47,
+        "medianBucketOccupancy": 8,
+        "occupiedBuckets": 291,
+        "bucketOverflow": 0,
+        "invalidPositions": 0
+      },
+      "renderer": {
+        "drawCalls": 2,
+        "triangles": 84000,
+        "uploadBytes": 948000,
+        "birdInstances": 3000,
+        "dyingInstances": 0,
+        "trailSegments": 27000,
+        "gpuMs": 0.161792,
+        "gpuSamples": 2334
+      },
+      "history": {
+        "ghostOverflows": 0
+      },
+      "timing": null,
+      "limits": "Browser submissions are not desktop presentation proof. No direct electrical power measurement."
+    },
+    "after": {
+      "timestamp": "2026-10-29T14:07:18.580Z",
+      "seed": 20261022,
+      "settings": {
+        "count": 3000,
+        "size": 6.58,
+        "speed": 87,
+        "speedError": 0.07,
+        "separation": 1.38,
+        "alignment": 1,
+        "cohesion": 0.65,
+        "edge": 0.175,
+        "trails": true,
+        "trailDuration": 0.28,
+        "color": "#84d8e0",
+        "brightness": 1.31,
+        "contrast": 1.2,
+        "randomColor": false,
+        "avoidTaskbar": false,
+        "marginLeft": 0,
+        "marginRight": 0,
+        "marginTop": 0,
+        "marginBottom": 0,
+        "renderScale": 1,
+        "fps": 60,
+        "trailHz": 30
+      },
+      "simulationTime": 25.016666666666527,
+      "alive": 3000,
+      "submitted": 3214,
+      "droppedSimulationSeconds": 2.701766666666666,
+      "simulationSteps": 3448,
+      "catchUpSteps": 379,
+      "stepAccounting": "Cumulative since page startup and not reset by reset(); simulationSteps counts sim.step calls and catchUpSteps sums max(0, steps per RAF frame - 1).",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25,
+        "pixels": [
+          1800,
+          1125
+        ],
+        "screen": [
+          1440,
+          988
+        ]
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "host": false,
+        "hostFps": 60,
+        "visibility": "visible",
+        "memory": {
+          "used": 79169365,
+          "total": 82850745
+        }
+      },
+      "simulation": {
+        "alive": 3000,
+        "entering": 0,
+        "leaving": 0,
+        "simulationMs": 8.300000004470348,
+        "removed": 47,
+        "born": 3047,
+        "dying": 0,
+        "boundaryDeaths": 47
+      },
+      "neighbors": {
+        "gridBuildMs": 0,
+        "queryCandidates": 618544,
+        "aggregatedNeighbors": 97509,
+        "aggregateBuildMs": 0.10000000149011612,
+        "gridQueries": 3000,
+        "gridEntries": 3000,
+        "maxBucketOccupancy": 40,
+        "medianBucketOccupancy": 8,
+        "occupiedBuckets": 269,
+        "bucketOverflow": 0,
+        "invalidPositions": 0
+      },
+      "renderer": {
+        "drawCalls": 2,
+        "triangles": 84000,
+        "uploadBytes": 948000,
+        "birdInstances": 3000,
+        "dyingInstances": 0,
+        "trailSegments": 27000,
+        "gpuMs": 0.231424,
+        "gpuSamples": 3235
+      },
+      "history": {
+        "ghostOverflows": 0
+      },
+      "timing": null,
+      "limits": "Browser submissions are not desktop presentation proof. No direct electrical power measurement."
+    },
+    "round": 2
+  }
+]

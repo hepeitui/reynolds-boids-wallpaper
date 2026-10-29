@@ -1,31 +1,259 @@
-<!doctype html>
-<html lang="zh-Hans">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <meta name="theme-color" content="#080a0b" />
-    <meta name="description" content="离线运行的 WebGL2 Reynolds 鸟群壁纸。" />
-    <title>群飞 · 实时鸟群壁纸</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <script src="host.js"></script>
-    <script defer src="settings.js"></script>
-    <script defer src="neighbors.js"></script>
-    <script defer src="flock-groups.js"></script>
-    <script defer src="flock-colors.js"></script>
-    <script defer src="simulation.js"></script>
-    <script defer src="history.js"></script>
-    <script defer src="renderer.js"></script>
-    <script defer src="ui.js"></script>
-    <script defer src="app.js"></script>
-  </head>
-  <body>
-    <main id="wallpaper" aria-label="实时鸟群壁纸">
-      <canvas id="scene" aria-label="正在飞行的鸟群"></canvas>
-    </main>
-    <aside id="controls" aria-label="鸟群壁纸开发设置"></aside>
-  </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Reynolds Boids (WebAssembly)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="boids-canvas"></canvas>
+
+  <!-- Standalone Independent Compact Stats Overlay -->
+  <div id="stats-overlay" class="stats-overlay hidden" aria-live="polite"></div>
+
+  <!-- Floating Settings Toggle Button (Hidden in host WE or when panel open) -->
+  <button id="toggle-settings" class="settings-toggle" title="设置 (H 快捷键)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+  </button>
+
+  <!-- Floating Settings Drawer -->
+  <aside id="settings-drawer" class="settings-drawer hidden">
+    <div class="drawer-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="drawer-title">鸟群配置</span>
+        <span class="drawer-badge">WASM 60Hz</span>
+      </div>
+      <button id="close-drawer" class="close-btn" title="关闭 (H 快捷键)">×</button>
+    </div>
+
+    <div class="drawer-content">
+      <div class="section-title">群落动力学</div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-count">
+          <span>鸟群数量</span>
+          <span id="val-count" class="control-value">1500</span>
+        </label>
+        <input id="prop-count" type="range" min="0" max="3000" step="50" value="1500">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-size">
+          <span>鸟体尺寸</span>
+          <span id="val-size" class="control-value">6.58</span>
+        </label>
+        <input id="prop-size" type="range" min="1.0" max="16.0" step="0.01" value="6.58">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-speed">
+          <span>飞行速度 (px/s)</span>
+          <span id="val-speed" class="control-value">87</span>
+        </label>
+        <input id="prop-speed" type="range" min="20" max="240" step="1" value="87">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-speedError">
+          <span>个体速度差异</span>
+          <span id="val-speedError" class="control-value">0.07</span>
+        </label>
+        <input id="prop-speedError" type="range" min="0.0" max="0.5" step="0.01" value="0.07">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-separation">
+          <span>分离权重</span>
+          <span id="val-separation" class="control-value">1.38</span>
+        </label>
+        <input id="prop-separation" type="range" min="0.0" max="4.0" step="0.01" value="1.38">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-alignment">
+          <span>对齐权重</span>
+          <span id="val-alignment" class="control-value">1.00</span>
+        </label>
+        <input id="prop-alignment" type="range" min="0.0" max="4.0" step="0.01" value="1.00">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-cohesion">
+          <span>聚合权重</span>
+          <span id="val-cohesion" class="control-value">0.65</span>
+        </label>
+        <input id="prop-cohesion" type="range" min="0.0" max="4.0" step="0.01" value="0.65">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-edge">
+          <span>边缘回转区</span>
+          <span id="val-edge" class="control-value">0.175</span>
+        </label>
+        <input id="prop-edge" type="range" min="0.0" max="0.35" step="0.001" value="0.175">
+      </div>
+
+      <div class="section-title">视觉与色彩</div>
+
+      <div class="control-group">
+        <label class="checkbox-label" for="prop-trails">
+          <input id="prop-trails" type="checkbox" checked>
+          <span>显示拖尾</span>
+        </label>
+      </div>
+
+      <div class="control-group" id="group-trailDuration">
+        <label class="control-label" for="prop-trailDuration">
+          <span>拖尾时长</span>
+          <span id="val-trailDuration" class="control-value">0.28s</span>
+        </label>
+        <input id="prop-trailDuration" type="range" min="0.1" max="0.5" step="0.01" value="0.28">
+      </div>
+
+      <div class="control-group" id="group-trailHz">
+        <label class="control-label" for="prop-trailHz">
+          <span>拖尾采样率 (Hz)</span>
+          <span id="val-trailHz" class="control-value">30</span>
+        </label>
+        <input id="prop-trailHz" type="range" min="10" max="60" step="1" value="30">
+      </div>
+
+      <div class="control-group">
+        <label class="checkbox-label" for="prop-randomColor">
+          <input id="prop-randomColor" type="checkbox">
+          <span>鸟群渐变配色</span>
+        </label>
+      </div>
+
+      <div class="control-group" id="group-color">
+        <label class="control-label" for="prop-color">
+          <span>基准颜色</span>
+          <input id="prop-color" type="color" value="#84d8e0">
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-brightness">
+          <span>亮度</span>
+          <span id="val-brightness" class="control-value">1.31</span>
+        </label>
+        <input id="prop-brightness" type="range" min="0.1" max="2.0" step="0.01" value="1.31">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-contrast">
+          <span>对比度</span>
+          <span id="val-contrast" class="control-value">1.20</span>
+        </label>
+        <input id="prop-contrast" type="range" min="0.5" max="2.0" step="0.01" value="1.20">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-renderScale">
+          <span>渲染比例</span>
+          <span id="val-renderScale" class="control-value">1.00</span>
+        </label>
+        <input id="prop-renderScale" type="range" min="0.5" max="1.0" step="0.01" value="1.00">
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="prop-fps">
+          <span>帧率上限</span>
+          <span id="val-fps" class="control-value">60</span>
+        </label>
+        <input id="prop-fps" type="range" min="15" max="120" step="1" value="60">
+      </div>
+
+      <div class="section-title">边距与任务栏避让</div>
+
+      <div class="control-group">
+        <label class="checkbox-label" for="prop-avoidTaskbar">
+          <input id="prop-avoidTaskbar" type="checkbox" checked>
+          <span>避开任务栏</span>
+        </label>
+      </div>
+
+      <div class="control-group" id="group-taskbarPos">
+        <label class="control-label" for="prop-taskbarPosition">
+          <span>任务栏位置 (手动指定)</span>
+        </label>
+        <select id="prop-taskbarPosition">
+          <option value="bottom" selected>底部 (Bottom)</option>
+          <option value="top">顶部 (Top)</option>
+          <option value="left">左侧 (Left)</option>
+          <option value="right">右侧 (Right)</option>
+        </select>
+      </div>
+
+      <div class="control-group" id="group-taskbarMargin">
+        <label class="control-label" for="prop-taskbarMargin">
+          <span>任务栏避让厚度</span>
+          <span id="val-taskbarMargin" class="control-value">48px</span>
+        </label>
+        <input id="prop-taskbarMargin" type="range" min="0" max="200" step="1" value="48">
+      </div>
+
+      <div class="grid-2">
+        <div class="control-group">
+          <label class="control-label" for="prop-marginLeft">
+            <span>左边距</span>
+            <span id="val-marginLeft" class="control-value">0px</span>
+          </label>
+          <input id="prop-marginLeft" type="range" min="0" max="200" step="1" value="0">
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="prop-marginRight">
+            <span>右边距</span>
+            <span id="val-marginRight" class="control-value">0px</span>
+          </label>
+          <input id="prop-marginRight" type="range" min="0" max="200" step="1" value="0">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="control-group">
+          <label class="control-label" for="prop-marginTop">
+            <span>上边距</span>
+            <span id="val-marginTop" class="control-value">0px</span>
+          </label>
+          <input id="prop-marginTop" type="range" min="0" max="200" step="1" value="0">
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="prop-marginBottom">
+            <span>下边距</span>
+            <span id="val-marginBottom" class="control-value">0px</span>
+          </label>
+          <input id="prop-marginBottom" type="range" min="0" max="200" step="1" value="0">
+        </div>
+      </div>
+
+      <div class="section-title">状态与调试</div>
+
+      <div class="control-group">
+        <label class="checkbox-label" for="prop-showStats">
+          <input id="prop-showStats" type="checkbox">
+          <span>显示独立统计浮层</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <span id="stats-display" class="stats-text">0 鸟 | 0.0 ms | 0 FPS</span>
+      <button id="btn-reset" class="btn-secondary">重置种子</button>
+    </div>
+  </aside>
+
+  <!-- WASM glue script (Emscripten single file build) -->
+  <script src="boids-wasm.js"></script>
+  <!-- WebGL Renderer Component -->
+  <script src="renderer.js"></script>
+  <!-- Main Application & Host Interface -->
+  <script src="app.js"></script>
+</body>
 </html>

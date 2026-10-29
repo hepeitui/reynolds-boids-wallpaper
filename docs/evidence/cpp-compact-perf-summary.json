@@ -1,0 +1,134 @@
+[
+  {
+    "workers": 1,
+    "scenario": "uniform-1440x900",
+    "count": 1500,
+    "before_median_total_ms": 860.404,
+    "after_median_total_ms": 785.007,
+    "reduction_percent": 8.76,
+    "candidates_equal": true,
+    "before_p50_ms": 1.296,
+    "after_p50_ms": 1.204
+  },
+  {
+    "workers": 1,
+    "scenario": "uniform-1440x900",
+    "count": 3000,
+    "before_median_total_ms": 2529.89,
+    "after_median_total_ms": 2425.895,
+    "reduction_percent": 4.11,
+    "candidates_equal": true,
+    "before_p50_ms": 3.985,
+    "after_p50_ms": 3.808
+  },
+  {
+    "workers": 1,
+    "scenario": "uniform-1920x1080",
+    "count": 1500,
+    "before_median_total_ms": 727.065,
+    "after_median_total_ms": 698.028,
+    "reduction_percent": 3.99,
+    "candidates_equal": true,
+    "before_p50_ms": 1.126,
+    "after_p50_ms": 1.069
+  },
+  {
+    "workers": 1,
+    "scenario": "uniform-1920x1080",
+    "count": 3000,
+    "before_median_total_ms": 2152.586,
+    "after_median_total_ms": 1980.722,
+    "reduction_percent": 7.98,
+    "candidates_equal": true,
+    "before_p50_ms": 3.364,
+    "after_p50_ms": 3.154
+  },
+  {
+    "workers": 1,
+    "scenario": "dense-core-1440x900",
+    "count": 1500,
+    "before_median_total_ms": 978.218,
+    "after_median_total_ms": 921.256,
+    "reduction_percent": 5.82,
+    "candidates_equal": true,
+    "before_p50_ms": 1.417,
+    "after_p50_ms": 1.287
+  },
+  {
+    "workers": 1,
+    "scenario": "dense-core-1440x900",
+    "count": 3000,
+    "before_median_total_ms": 3114.762,
+    "after_median_total_ms": 2860.475,
+    "reduction_percent": 8.16,
+    "candidates_equal": true,
+    "before_p50_ms": 4.448,
+    "after_p50_ms": 4.109
+  },
+  {
+    "workers": 8,
+    "scenario": "uniform-1440x900",
+    "count": 1500,
+    "before_median_total_ms": 322.836,
+    "after_median_total_ms": 326.85,
+    "reduction_percent": -1.24,
+    "candidates_equal": true,
+    "before_p50_ms": 0.37,
+    "after_p50_ms": 0.355
+  },
+  {
+    "workers": 8,
+    "scenario": "uniform-1440x900",
+    "count": 3000,
+    "before_median_total_ms": 802.039,
+    "after_median_total_ms": 814.397,
+    "reduction_percent": -1.54,
+    "candidates_equal": true,
+    "before_p50_ms": 0.867,
+    "after_p50_ms": 0.862
+  },
+  {
+    "workers": 8,
+    "scenario": "uniform-1920x1080",
+    "count": 1500,
+    "before_median_total_ms": 302.035,
+    "after_median_total_ms": 298.551,
+    "reduction_percent": 1.15,
+    "candidates_equal": true,
+    "before_p50_ms": 0.348,
+    "after_p50_ms": 0.341
+  },
+  {
+    "workers": 8,
+    "scenario": "uniform-1920x1080",
+    "count": 3000,
+    "before_median_total_ms": 730.679,
+    "after_median_total_ms": 703.199,
+    "reduction_percent": 3.76,
+    "candidates_equal": true,
+    "before_p50_ms": 0.793,
+    "after_p50_ms": 0.752
+  },
+  {
+    "workers": 8,
+    "scenario": "dense-core-1440x900",
+    "count": 1500,
+    "before_median_total_ms": 324.825,
+    "after_median_total_ms": 305.297,
+    "reduction_percent": 6.01,
+    "candidates_equal": true,
+    "before_p50_ms": 0.404,
+    "after_p50_ms": 0.378
+  },
+  {
+    "workers": 8,
+    "scenario": "dense-core-1440x900",
+    "count": 3000,
+    "before_median_total_ms": 746.701,
+    "after_median_total_ms": 724.744,
+    "reduction_percent": 2.94,
+    "candidates_equal": true,
+    "before_p50_ms": 0.971,
+    "after_p50_ms": 0.95
+  }
+]

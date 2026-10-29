@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+# SINGLE_FILE output can contain literal WASM bytes; never normalize its EOLs.
+boids-wasm.js binary
